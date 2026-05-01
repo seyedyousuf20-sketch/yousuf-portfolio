@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S. Seyed Yousuf - Portfolio</title>
+  <meta name="description" content="Modern motion portfolio for S. Seyed Yousuf" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #fff8f7; --surface: rgba(255,255,255,0.82); --surface-2: #ffffff; --text: #1f1111; --muted: #7e5f5f; --line: rgba(153, 41, 41, 0.12); --primary: #c81d25; --primary-dark: #8f1017; --accent: #ffb3b7; --shadow: 0 18px 45px rgba(200,29,37,0.12); --radius: 26px; --max: 1180px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Manrope', sans-serif; color: var(--text); background: #fffdfc; overflow-x: hidden; position: relative; }
+
+    /* 3D Moving Background Layer */
+    .bg-animation {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 50% 50%, #fff5f4 0%, #fffdfc 100%);
+      overflow: hidden;
+    }
+    .cube {
+      position: absolute;
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, rgba(200,29,37,0.05), rgba(255,179,183,0.12));
+      border: 1px solid rgba(200,29,37,0.06);
+      animation: runAround 20s linear infinite;
+      border-radius: 10px;
+    }
+    @keyframes runAround {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translate(90vw, 90vh) rotate(720deg); opacity: 0; }
+    }
+
+    .orb { position: fixed; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(200,29,37,.20), rgba(255,179,183,.16) 45%, transparent 70%); filter: blur(18px); top: 8%; right: -110px; z-index: 0; pointer-events: none; animation: floaty 9s ease-in-out infinite; }
+    @keyframes floaty { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(24px) translateX(-26px); } }
+    
+    a { color: inherit; text-decoration: none; }
+    .wrap { position: relative; z-index: 1; width: min(var(--max), calc(100% - 28px)); margin: 0 auto; }
+    .nav-wrap { padding-top: 18px; }
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 14px 18px; border-radius: 999px; background: rgba(255,255,255,0.72); border: 1px solid rgba(200,29,37,.1); backdrop-filter: blur(14px); box-shadow: var(--shadow); position: sticky; top: 16px; z-index: 10; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; }
+    .logo { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; color: white; background: linear-gradient(135deg, var(--primary), #f2555e); font-family: 'Outfit', sans-serif; box-shadow: 0 14px 28px rgba(200,29,37,.22); }
+    .navlinks { display: flex; flex-wrap: wrap; gap: 18px; color: var(--muted); }
+    .navlinks a:hover { color: var(--primary); }
+
+    .hero { min-height: 94vh; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 34px; padding: 44px 0 36px; }
+    .pill { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(200,29,37,.08); color: var(--primary); border: 1px solid rgba(200,29,37,.14); font-size: .9rem; margin-bottom: 18px; font-weight: 600; }
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+    .hero h1 { font-size: clamp(2.8rem, 6.5vw, 5.5rem); line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 18px; }
+    .hero h1 span { color: var(--primary); }
+    .lead { color: var(--muted); font-size: 1.06rem; line-height: 1.8; max-width: 62ch; margin-bottom: 26px; }
+
+    .cta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
+    .btn { min-height: 50px; padding: 0 24px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; transition: all .3s ease; font-weight: 700; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(200,29,37,0.15); }
+    .btn.primary { background: var(--primary); color: white; box-shadow: 0 16px 34px rgba(200,29,37,.24); }
+    .btn.secondary { border: 1px solid rgba(200,29,37,.16); background: white; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+    .chip { padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,.78); border: 1px solid var(--line); color: #5f4141; font-size: .92rem; font-weight: 500; }
+
+    .hero-visual { position: relative; min-height: 560px; }
+    .visual-stack { position: relative; width: min(100%, 500px); height: 560px; margin-inline: auto; }
+    .glass { position: absolute; border-radius: var(--radius); border: 1px solid rgba(200,29,37,.10); background: rgba(255,255,255,.72); backdrop-filter: blur(14px); box-shadow: var(--shadow); transition: transform 0.5s ease; }
+    .glass:hover { transform: scale(1.02); }
+    .main-card { inset: 42px 40px 130px 40px; padding: 24px; }
+    .small-top { top: 0; right: 0; width: 220px; padding: 18px; }
+    .small-left { left: 0; bottom: 10px; width: 230px; padding: 18px; }
+    .small-right { right: 18px; bottom: 84px; width: 170px; padding: 18px; }
+
+    .portrait { min-height: 340px; border-radius: 24px; overflow: hidden; position: relative; background: radial-gradient(circle at 20% 20%, rgba(255,179,183,.65), transparent 26%), radial-gradient(circle at 80% 10%, rgba(200,29,37,.20), transparent 26%), linear-gradient(180deg, #fff 0%, #ffe7e8 100%); display: flex; align-items: end; }
+    .portrait::before { content: "SY"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 7rem; letter-spacing: -.06em; font-weight: 800; color: rgba(200,29,37,.09); font-family: 'Outfit', sans-serif; }
+    .portrait-meta { width: 100%; position: relative; z-index: 1; padding: 22px; background: linear-gradient(to top, rgba(255,255,255,.94), rgba(255,255,255,.14)); }
+    
+    section { padding: 40px 0; }
+    .section-top { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 22px; }
+    .section-top h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); }
+    .split { display: grid; grid-template-columns: 1.08fr .92fr; gap: 20px; }
+    .panel { border-radius: 26px; background: rgba(255,255,255,.76); border: 1px solid var(--line); box-shadow: var(--shadow); padding: 24px; }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .stat { padding: 18px; border-radius: 20px; background: #fff; border: 1px solid var(--line); text-align: center; }
+    .stat strong { display: block; font-size: 1.8rem; color: var(--primary); margin-bottom: 6px; }
+    .stat span { color: var(--muted); font-size: 0.9rem; }
+    
+    .timeline { display: grid; gap: 16px; }
+    .item { padding: 18px 18px 18px 22px; border-left: 4px solid var(--primary); background: rgba(255,255,255,.68); border-radius: 0 18px 18px 0; transition: background 0.3s ease; }
+    .item:hover { background: rgba(255, 255, 255, 0.9); }
+    .item small { color: var(--primary); display: block; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; }
+
+    .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .box { border-radius: 22px; background: rgba(255,255,255,0.85); border: 1px solid var(--line); box-shadow: var(--shadow); padding: 22px; overflow: hidden; transition: transform 0.3s ease; }
+    .box:hover { transform: translateY(-5px); }
+    .box h3 { margin-bottom: 12px; font-size: 1.4rem; }
+    .tag { display: inline-block; margin-bottom: 14px; padding: 6px 12px; border-radius: 999px; background: rgba(200,29,37,.08); color: var(--primary); border: 1px solid rgba(200,29,37,.14); font-size: .8rem; font-weight: 600; }
+    .project-image { width: 100%; height: 190px; object-fit: cover; border-radius: 18px; display: block; margin-bottom: 16px; border: 1px solid rgba(200,29,37,.08); }
+
+    .reveal-left, .reveal-right { opacity: 0; transition: transform 1s cubic-bezier(.2,.7,.1,1), opacity 1s ease; will-change: transform, opacity; }
+    .reveal-left { transform: translateX(-60px); }
+    .reveal-right { transform: translateX(60px); }
+    .visible { opacity: 1 !important; transform: translateX(0) !important; }
+
+    @media (max-width: 1024px) { .hero, .split, .cards-3 { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 34px; } }
+    @media (max-width: 720px) { .nav { border-radius: 28px; flex-direction: column; padding: 20px; } .navlinks { justify-content: center; width: 100%; } .visual-stack { height: 500px; } }
+  </style>
+</head>
+<body>
+  <div class="bg-animation" id="bgAnim"></div>
+  <div class="orb"></div>
+
+  <div class="wrap">
+    <div class="nav-wrap">
+      <nav class="nav reveal-left visible">
+        <div class="brand"><div class="logo">SY</div><span>S. Seyed Yousuf</span></div>
+        <div class="navlinks">
+          <a href="#about">About</a>
+          <a href="#education">Education</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+
+    <main>
+      <section class="hero">
+        <div class="reveal-left visible">
+          <div class="pill">MBA Student | Full Stack Web Developer</div>
+          <h1>Aspiring <span>Professional</span> in Management & <span>Technology</span></h1>
+          <p class="lead">I am S. Seyed Yousuf from Kilakarai. I specialize in building modern web applications while pursuing my MBA in HR and Logistics. I bridge the gap between technical development and business management.</p>
+          <div class="cta">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn secondary" href="mailto:seyedyousuf19@gmail.com">Hire Me</a>
+          </div>
+          <div class="chips">
+            <span class="chip">Java Full Stack</span>
+            <span class="chip">HR & Logistics</span>
+            <span class="chip">UI/UX Design</span>
+          </div>
+        </div>
+        <div class="hero-visual reveal-right visible">
+          <div class="visual-stack">
+            <div class="glass small-top"><h3>Core Tech</h3><p>Java, Spring Boot, React, MySQL</p></div>
+           <div class="glass main-card">
+    <div class="portrait">
+        <!-- Inga unga photo link-ah add pannunga -->
+        <img src="myimage.png" alt="S. Seyed Yousuf" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 0;">
+        
+        <div class="portrait-meta">
+            <h3>S. Seyed Yousuf</h3>
+            <p>MBA student & Web Developer focused on solving business problems through code.</p>
+        </div>
+    </div>
+</div>
+            <div class="glass small-left"><h3>Internship</h3><p>Saiket Systems - Remote Web Developer.</p></div>
+            <div class="glass small-right"><h3>Speed</h3><p>Typewriting First Class Certified.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="section-top reveal-left"><h2>My Profile</h2></div>
+        <div class="split">
+          <div class="panel reveal-left">
+            <p>I combine my academic knowledge in <strong>B.Com Computer Applications</strong> and <strong>MBA (HR & Logistics)</strong> to build efficient software solutions. My focus is on creating tools that help business management, like stock tracking and employee records.</p>
+            <p style="margin-top: 15px;">I enjoy working with modern web aesthetics like glassmorphism and clean animations to make every digital experience feel premium and professional.</p>
+          </div>
+          <div class="panel reveal-right">
+            <div class="stats">
+              <div class="stat"><strong>3+</strong><span>Live Projects</span></div>
+              <div class="stat"><strong>1</strong><span>Internship</span></div>
+              <div class="stat"><strong>MBA</strong><span>First Year</span></div>
+              <div class="stat"><strong>1st</strong><span>Typewriting Class</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education">
+        <div class="section-top reveal-right"><h2>Path to Excellence</h2></div>
+        <div class="split">
+          <div class="panel timeline reveal-left">
+            <div class="item"><small>Postgraduate</small><h3>MBA (HR & Logistics)</h3><p>Mohamed Sathak Engineering College - Pursuing current year.</p></div>
+            <div class="item"><small>Undergraduate</small><h3>B.Com Computer Application</h3><p>Syed Hameedha Arts and Science College.</p></div>
+          </div>
+          <div class="panel timeline reveal-right">
+            <div class="item"><small>Certification</small><h3>Full Stack Development</h3><p>Completed intensive training at Magizhchi Tech Academy.</p></div>
+            <div class="item"><small>Experience</small><h3>Remote Internship</h3><p>Saiket Systems - One month of practical web development exposure.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="section-top reveal-right"><h2>Recent Work</h2></div>
+        <div class="cards-3">
+          <article class="box reveal-left">
+            <img class="project-image" src="gymtool.png" alt="Gym Management">
+            <span class="tag">Management App</span>
+            <h3>Gym System</h3>
+            <p>A web solution for managing memberships, payments, and schedules.</p>
+          </article>
+          <article class="box reveal-right">
+            <img class="project-image" src="tiles.png" alt="Tiles Stock">
+            <span class="tag">Inventory Tool</span>
+            <h3>Tiles Stock Import</h3>
+            <p>An inventory management system designed for tile showrooms to track stock imports.</p>
+          </article>
+          <article class="box reveal-left">
+            <img class="project-image" src="perfume.png" alt="Perfume E-Commerce">
+            <span class="tag">E-Commerce</span>
+            <h3>Spray Store</h3>
+            <p>A clean, modern online store for selling perfumes and spray products.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="section-top reveal-left"><h2>Get In Touch</h2></div>
+        <div class="panel reveal-right" style="text-align: center; padding: 40px;">
+          <h3 style="margin-bottom: 20px;">Ready to collaborate?</h3>
+          <p style="color: var(--muted); margin-bottom: 30px;">I'm available for web development projects and HR management roles.</p>
+          <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a href="mailto:seyedyousuf19@gmail.com" class="btn primary">seyedyousuf19@gmail.com</a>
+            <p class="btn secondary">9025588939</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer reveal-right" style="text-align: center; padding: 20px; color: var(--muted);"><p>© 2026 S. Seyed Yousuf. Built with passion in Kilakarai.</p></footer>
+  </div>
+
+  <script>
+    // 3D Background Generator
+    const bg = document.getElementById('bgAnim');
+    for(let i=0; i<12; i++) {
+      const cube = document.createElement('div');
+      cube.className = 'cube';
+      cube.style.left = Math.random() * 100 + 'vw';
+      cube.style.top = Math.random() * 100 + 'vh';
+      cube.style.animationDelay = (Math.random() * 20) + 's';
+      cube.style.animationDuration = (15 + Math.random() * 15) + 's';
+      bg.appendChild(cube);
+    }
+
+    const items = document.querySelectorAll('.reveal-left, .reveal-right');
+    const obs = new IntersectionObserver((entries) => { 
+      entries.forEach((entry) => { 
+        if (entry.isIntersecting) entry.target.classList.add('visible'); 
+      }); 
+    }, { threshold: 0.15 });
+    items.forEach((el, i) => { 
+      el.style.transitionDelay = (i * 50) + 'ms'; 
+      obs.observe(el); 
+    });
+  </script>
+</body>
+</html>
